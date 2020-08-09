@@ -1,17 +1,27 @@
 import React from "react";
+import {gql} from "apollo-boost";//gql===graphql
 import {ThemeProvider} from "styled-components";
 import GlobalStyles from "../Styles/GlobalStyles";
 import Theme from "../Styles/Theme";
 import Router from "./Router";
+import {useQuery} from "react-apollo-hooks";
 
-export default()=>(
+const QUERY = gql`
+{
+  isLoggedIn @client
+}
+`;
+//@client가 react apollo 없으면 쿼리를 API로 보내려고 한다
+export default()=>{
+
+  const {data:{isLoggedIn}} = useQuery(QUERY);
+  return(
   <ThemeProvider theme ={Theme}>
     <>
   <GlobalStyles/>
-  <Router isLoggedIn={false}/>
+  <Router isLoggedIn={isLoggedIn}/>
   </>
   </ThemeProvider>
-);
-//우리는 이버전에서 components를 사용하지 않을꺼야 왜냐하면 react hooks를 사용하는게 낫다
-
-//
+  );
+};
+//이게 react-apollo-hooks를 이용해서 query를 수행하는 데 필ㄹ요한 코드

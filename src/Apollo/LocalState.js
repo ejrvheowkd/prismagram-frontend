@@ -5,7 +5,7 @@
 
 //isLoggedIn을 false로 둘 거야
 export const defaults={
-    isLoggedIn: localStorage.getItem("token")!==null?true:false
+    isLoggedIn: Boolean(localStorage.getItem("token"))||false
 
 };
     //resolvers는 ture,false를 바꾼다
