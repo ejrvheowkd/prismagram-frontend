@@ -17,6 +17,9 @@ a{
     color:${props=>props.theme.blueColor};
     text-decoration:none;
 }
+input:focus{
+    outline:none;
+}
 `;
 //color은 text color
 //링크 a
