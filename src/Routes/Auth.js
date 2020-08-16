@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import styled from "styled-components"; //라이브러리
 import Input from "../Components/Input";
 import Button from "../Components/Button";
+import useInput from "../Hooks/useInput";
 
 const Wrapper = styled.div `
     min-height: 80vh;
@@ -45,7 +46,16 @@ const Link = styled.span `
 `;
 export default() => {
     const [action, setAction] = useState("logIn");
-
+    const username = useInput("");
+    const password = useInput("");
+    const firstname = useInput("");
+    const lastname =useInput("");
+    const email = useInput("");
+    console.log(username,
+        password,
+        firstname,
+        lastname,
+        email);
     return (
         <Wrapper>
             <Form>
@@ -53,17 +63,17 @@ export default() => {
                     action === "logIn"
                         ? (
                             <form>
-                                <Input placeholder={"Username"}/>
-                                <Input placeholder={"Password"}/>
+                                <Input placeholder={"Username"}{...username}/>
+                                <Input placeholder={"Password"}{...password} type ="password"/>
 <Button text ={"Log in"} />
                             </form>
                         )
                 :  <form>
-                <Input placeholder={"First name"}/>
-                <Input placeholder={"Last name"}/>
-                <Input placeholder={"Email"}/>
-                <Input placeholder={"Username"}/>
-                <Input placeholder={"Password"}/>
+                <Input placeholder={"First name"} {...firstname}/>
+                <Input placeholder={"Last name"} {...lastname}/>
+                <Input placeholder={"Email"} {...email} type="email"/>
+                <Input placeholder={"Username"}{...username}/>
+                <Input placeholder={"Password"}{...password} type="password"/>
 
 <Button text ={"Sign up"} />
             </form>}
