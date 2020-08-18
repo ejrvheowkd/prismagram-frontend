@@ -12,6 +12,7 @@ export default() => {
     const username = useInput("");
     const firstName = useInput("");
     const lastName = useInput("");
+    const secret = useInput("");
     const email = useInput("");
     const [requestSecretMutation] = useMutation(LOG_IN,
         {
@@ -32,10 +33,15 @@ export default() => {
         if(action==="logIn"){
             if(email.value!==""){
                 try{
-                    const {requestSecret} = await requestSecretMutation();
+                    const {data:{requestSecret}} = await requestSecretMutation();
                         if(!requestSecret){
                             toast.error("계정이 없습니다.");
                             setTimeout(()=> setAction("signUp"),3000);
+                        }else
+                        {
+                            toast.success("Check your inbox for your login secret");
+                    setAction("confirm");
+
                         }
                 }
                 catch{
@@ -50,7 +56,7 @@ export default() => {
       if (email.value !== "" && username.value !== "" && firstName.value !== "" && lastName.value !== "")
                 {
                     try{
-                   const {createAccount} = await createAccountMutation();
+                   const {data:{createAccount}} = await createAccountMutation();
                    if(!createAccount)
                    {
                        toast.error("Can't create account");
@@ -66,7 +72,6 @@ export default() => {
             }
                 else
                 {
-                    console.log(email.value,username.value,firstName.value,lastName.value);
                     toast.error("모든 칸 채웠!");
                 }
         }
@@ -79,9 +84,10 @@ export default() => {
         firstName={firstName}
         lastName ={lastName}
         email={email}
+        secret={secret}
         onSubmit={onSubmit}
         />
-    )
+    );
 };
 
 //useState의 첫번째 액션은 로그인
