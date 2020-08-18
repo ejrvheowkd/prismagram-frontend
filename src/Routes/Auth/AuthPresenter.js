@@ -1,8 +1,9 @@
-import React, {useState} from "react";
+//style
+
+import React from "react";
 import styled from "styled-components"; //라이브러리
-import Input from "../Components/Input";
-import Button from "../Components/Button";
-import useInput from "../Hooks/useInput";
+import Input from "../../Components/Input";
+import Button from "../../Components/Button";
 
 const Wrapper = styled.div `
     min-height: 80vh;
@@ -44,36 +45,30 @@ const Link = styled.span `
   color: ${props => props.theme.blueColor};
   cursor: pointer;
 `;
-export default() => {
-    const [action, setAction] = useState("logIn");
-    const username = useInput("");
-    const password = useInput("");
-    const firstname = useInput("");
-    const lastname =useInput("");
-    const email = useInput("");
-    console.log(username,
-        password,
-        firstname,
-        lastname,
-        email);
-    return (
+export default({
+    action,
+    username,
+    firstname,
+    lastname,
+    email,
+    setAction,
+    onLogin
+}) => (
         <Wrapper>
             <Form>
                 {
                     action === "logIn"
                         ? (
-                            <form>
-                                <Input placeholder={"Username"}{...username}/>
-                                <Input placeholder={"Password"}{...password} type ="password"/>
+                            <form onSubmit={onLogin}>
+                                <Input placeholder={"Email"} {...email} type="email"/>
 <Button text ={"Log in"} />
                             </form>
                         )
-                :  <form>
+                :  <form onSubmit={onLogin}>
                 <Input placeholder={"First name"} {...firstname}/>
                 <Input placeholder={"Last name"} {...lastname}/>
                 <Input placeholder={"Email"} {...email} type="email"/>
                 <Input placeholder={"Username"}{...username}/>
-                <Input placeholder={"Password"}{...password} type="password"/>
 
 <Button text ={"Sign up"} />
             </form>}
@@ -95,6 +90,6 @@ export default() => {
                 </StateChanger>
         </Wrapper>
     );
-};
+
 
 //useState의 첫번째 액션은 로그인
