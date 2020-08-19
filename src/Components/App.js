@@ -1,13 +1,15 @@
 import React from "react";
 import {gql} from "apollo-boost"; //gql===graphql
 import styled, {ThemeProvider} from "styled-components";
+import {HashRouter as Router} from "react-router-dom";
 import GlobalStyles from "../Styles/GlobalStyles";
 import Theme from "../Styles/Theme";
-import Router from "./Router";
+import Routes from "./Router";
 import {useQuery} from "react-apollo-hooks";
-import { ToastContainer,toast } from 'react-toastify';
+import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Footer from "./Footer";
+import Header from "./Header";
 
 const QUERY = gql `
 {
@@ -16,7 +18,7 @@ const QUERY = gql `
 `;
 const Wrapper = styled.div `
 margin: 0 auto;
-max-width: 935px;
+max-width: ${props => props.theme.maxWidth};
 width: 100%;
 `;
 //@client가 react apollo 없으면 쿼리를 API로 보내려고 한다
@@ -27,12 +29,19 @@ export default() => {
         }} = useQuery(QUERY);
     return (
         <ThemeProvider theme={Theme}>
+            <>
+            <GlobalStyles/>
+            <Router>
+                <>
+                <Header/>
             <Wrapper>
-                <GlobalStyles/>
-                <Router isLoggedIn={isLoggedIn}/>
+                <Routes isLoggedIn={isLoggedIn}/>
                 <Footer/>
-                <ToastContainer position={toast.POSITION.BOTTOM_LEFT} />
             </Wrapper>
+            </>
+            </Router>
+            <ToastContainer position={toast.POSITION.BOTTOM_LEFT}/>
+            </>
         </ThemeProvider>
     );
 };
