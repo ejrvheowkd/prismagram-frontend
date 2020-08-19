@@ -15,7 +15,7 @@ export const resolvers ={
         //누군가 Log in 하도록 Mutation을 만들 건데 token이 있으면 isLoggendIn은 true
         logUserIn:(_,{token},{cache}) =>{
             localStorage.setItem("token",token);
-            cache.wtiteData({
+            cache.writeData({
                 data:{
                     isLoggedIn:true
                 }
