@@ -62,17 +62,17 @@ const HeaderLink = styled(Link)`
 `;
 
 const ME = gql `
- { me{
-      user{
-          username
-      }
-  }
-}
-`;
+ {
+     me{
+         username
+     }
+ }
+ `;
 export default withRouter(({history}) => {
     const search = useInput("");
-    const meQuery = useQuery(ME);
-    console.log(meQuery);
+    const { data, loading } = useQuery(ME);
+
+if (loading) return "";
     const onSearchSubmit = (e) =>
     {
         e.preventDefault();
@@ -98,9 +98,11 @@ export default withRouter(({history}) => {
                 <HeaderLink to="/notifications">
                 <HeartEmpty/>
                 </HeaderLink>
-                <HeaderLink to="/username">
+               {!data.me?  <HeaderLink to="/#">
                 <Cat/>
-                </HeaderLink>
+                </HeaderLink>:  <HeaderLink to={data.me.username}>
+                <Cat/>
+                </HeaderLink>}
             </HeaderColumn>
         </HeaderWrapper>
     </Header>
