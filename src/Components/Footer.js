@@ -8,6 +8,7 @@ align-items:center;
 text-transform:uppercase;
 font-weight:600;
 font-size:12px;
+margin:50px 0px;
 `;
 
 const List = styled.ul `
