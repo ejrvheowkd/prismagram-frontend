@@ -10,9 +10,39 @@ const PostContainer = ({
     isLiked,
     likeCount,
     comments,
-    createdAt
+    createdAt,
+    caption,
+    location
 }) => {
-    return <PostPresenter/>
+    const [isLikedS,setIsLiked]= useState(isLiked);
+    const [likeCountS,setLikeCount] = useState(likeCount);
+    const comment = useInput("");
+    return (<PostPresenter  
+    user = {
+        user
+    }
+    files = {
+        files
+    }
+    caption= {caption}
+    location= {location}
+    likeCount = {
+        likeCountS
+    }
+    isLiked = {
+        isLikedS
+    }
+    comments = {
+        comments
+    }
+    createdAt = {
+       createdAt
+    }
+    newComment={comment}
+    setIsLiked={setIsLiked}
+    setLikeCount={setLikeCount}
+    />
+    );
 };
 //export default하지 않는 이유는 PostContainer.propTypes해야하기 떄문에
 
@@ -41,7 +71,9 @@ PostContainer.propTypes = {
             }).isRequired
     })
     ).isRequired,
-    createdAt:PropTypes.string
+    caption:PropTypes.string.isRequired,
+    location:PropTypes.string,
+    createdAt:PropTypes.string.isRequired
 };
 
 export default PostContainer;
