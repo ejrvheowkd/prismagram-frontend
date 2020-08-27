@@ -98,7 +98,7 @@ font-size:13px;
 const Comments = styled.ul`
 margin-top: 10px;
 `;
-const Comment = styled.li `
+const Comment = styled.div `
 margin-bottom:7px;
 span{
     margin-right:5px;
@@ -118,8 +118,11 @@ export default({
     currentItem,
     toggleLike,
     onKeyPress,
-    comments
-}) => (<Post>
+    comments,
+    selfComments
+}) => 
+(
+<Post>
     <Header>
         <Avatar size="sm" url={avatar}/>
         <UseColumn>
@@ -160,12 +163,14 @@ export default({
                 : `${likeCount} like`}/> 
                 {comments && 
                 (<Comments>{comments.map(comment => (<Comment key={comment.id}><FatText text={comment.user.username}/>{comment.text}</Comment>))}</Comments>)}
+            {selfComments.map(comment => (<Comment key={comment.id}><FatText text={comment.user.username}/>{comment.text}</Comment>))}
             <Timestamp>{createdAt}</Timestamp>
             <Textarea
+                onKeyPress={onKeyPress}
                 placeholder={"Add a Comment..."}
                 value={newComment.value}
                 onChange={newComment.onChange}
-                onKeyUp={onKeyPress}/>
+               />
         </Meta>
     </Post>
     );

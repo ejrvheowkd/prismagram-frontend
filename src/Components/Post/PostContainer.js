@@ -2,8 +2,9 @@ import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
 import PostPresenter from "./PostPresenter";
 import useInput from "../../Hooks/useInput";
-import {useMutation} from "react-apollo-hooks";
+import {useMutation, useQuery} from "react-apollo-hooks";
 import {TOGGLE_LIKE, ADD_COMMENT} from "./PostQueries";
+import { toast } from "react-toastify";
 
 const PostContainer = ({
     id,
@@ -19,7 +20,10 @@ const PostContainer = ({
     const [isLikedS, setIsLiked] = useState(isLiked);
     const [likeCountS, setLikeCount] = useState(likeCount);
     const [currentItem, setCurrentItem] = useState(0);
+    const [selfComments,setSelfComments] =useState([]);
     const comment = useInput("");
+    const [createdAtS,setCreatedAt] = useState(createdAt);
+    //console.log(createdAtS);
     const [toggleLikeMutation] = useMutation(TOGGLE_LIKE, {
         variables: {
             postId: id
@@ -31,6 +35,10 @@ const PostContainer = ({
             text: comment.value
         }
     });
+    const Cut =()=>
+    {
+        setCreatedAt(createdAtS.slice(0,10));
+    };
     const slide = () => {
         const totalFiles = files.length;
         if (currentItem === totalFiles - 1) {
@@ -43,7 +51,9 @@ const PostContainer = ({
     useEffect(() => {
         slide();
     }, [currentItem]); //component가 mount되면 slide function이 시작될거야
-
+    useEffect(() => {
+        Cut();
+      },[]);
     const toggleLike =  () => {
         toggleLikeMutation();
         if (isLikedS === true) {
@@ -53,20 +63,24 @@ const PostContainer = ({
             setIsLiked(true);
             setLikeCount(likeCountS + 1);
         }
+    };
+ 
 
-            
-       
-};
+const onKeyPress=  async event=>{
+const{which} =event;
 
-const onKeyPress= e=>{
-const{keyCode} =e;
-
-if(keyCode===13)
+if(which===13)
 {
-    comment.setValue("");
-    //addCommentMutation();
-}    
-return;
+    event.preventDefault();
+    try{
+        const {data:{addComment}}= await addCommentMutation();
+        setSelfComments([...selfComments,addComment]);
+        comment.setValue("");
+    }catch
+    {
+        toast.error("Can't send comment");
+    }
+  }
 };
 
 return (
@@ -78,13 +92,14 @@ return (
         likeCount={likeCountS}
         isLiked={isLikedS}
         comments={comments}
-        createdAt={createdAt}
+        createdAt={createdAtS}
         newComment={comment}
         setIsLiked={setIsLiked}
         setLikeCount={setLikeCount}
         currentItem={currentItem}
         toggleLike={toggleLike}
         onKeyPress={onKeyPress}
+        selfComments={selfComments}
         />
 );
 };

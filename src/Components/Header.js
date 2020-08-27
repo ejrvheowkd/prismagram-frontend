@@ -6,6 +6,7 @@ import {gql} from"apollo-boost";
 import useInput from "../Hooks/useInput";
 import {useQuery} from "react-apollo-hooks";
 import { HeartEmpty, Cat, Compass,Logo } from "./Icons";
+import { ME } from "../SharedQueries";
 const Header = styled.header`
     width:100%;
     border:0;
@@ -62,13 +63,7 @@ const HeaderLink = styled(Link)`
   }
 `;
 
-const ME = gql `
- {
-     me{
-         username
-     }
- }
- `;
+
 export default withRouter(({history}) => {
     const search = useInput("");
     const { data, loading } = useQuery(ME);
