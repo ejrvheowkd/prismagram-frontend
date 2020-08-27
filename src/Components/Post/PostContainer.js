@@ -58,6 +58,17 @@ const PostContainer = ({
        
 };
 
+const onKeyPress= e=>{
+const{keyCode} =e;
+
+if(keyCode===13)
+{
+    comment.setValue("");
+    //addCommentMutation();
+}    
+return;
+};
+
 return (
     <PostPresenter
         user={user}
@@ -72,7 +83,9 @@ return (
         setIsLiked={setIsLiked}
         setLikeCount={setLikeCount}
         currentItem={currentItem}
-        toggleLike={toggleLike}/>
+        toggleLike={toggleLike}
+        onKeyPress={onKeyPress}
+        />
 );
 };
 //export default하지 않는 이유는 PostContainer.propTypes해야하기 떄문에

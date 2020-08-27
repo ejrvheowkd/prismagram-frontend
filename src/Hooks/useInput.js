@@ -9,8 +9,9 @@ export default (defaultValue)=>{
          } = e;
     setValue(value);
 
-    }
-    return {value,onChange};
+    };
+    
+    return {value,onChange,setValue};
 };
 
 //useInput는 하나의 value를 가지는데 우리는 useState에서 그 value를 사용할 거고
