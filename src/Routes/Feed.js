@@ -55,20 +55,13 @@ export default() => {
     return (<Wrapper>
         <Helmet><title>Feed | Prismagram</title></Helmet>
         {loading && <Loader/>}{
-            !loading && data && data.seeFeed && data
-                .seeFeed
-                .map(post =>(< Post key = {
-                    post.id
-                }
-                id = {
-                    post.id
-                }
-                user = {
-                    post.user
-                }
-                files = {
-                    post.files
-                }
+            !loading && data && data.seeFeed && data.seeFeed.map((post) =>(<Post 
+                key ={post.id}
+                id = {post.id}
+                caption = {post.caption}
+                location = {post.location}
+                user = {post.user}
+                files = {post.files}
                 likeCount = {
                     post.likeCount
                 }
@@ -81,9 +74,9 @@ export default() => {
                 createdAt = {
                    post.createdAt
                 }
-                caption= {post.caption}
-                location= {post.location}
-                 />))
-        }
-    </Wrapper>);
+                
+                 />
+                 ))}
+    </Wrapper>
+    );
 };

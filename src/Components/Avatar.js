@@ -25,7 +25,7 @@ const getSize =(size) =>{
     width:${number}px;
     height:${number}px;
     `;
-}
+};
 
 const Avatar = ({
     size = "sm",

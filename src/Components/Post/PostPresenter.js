@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import TextareaAutosize from "react-autosize-textarea";
 import FatText from "../FatText";
 import Avatar from "../Avatar";
 import { HeartFull, HeartEmpty, Comment } from "../Icons";
@@ -7,7 +8,7 @@ import { HeartFull, HeartEmpty, Comment } from "../Icons";
 const Post = styled.div `
 ${props => props.theme.whiteBox};
 width:100%;
-max-width:600px;
+max-width:500px;
 margin-bottom:25px;
 `;
 
@@ -27,10 +28,26 @@ const Location = styled.span `
     font-size:12px;
 `;
 
-const Files = styled.div ``;
+const Files = styled.div `
+position: relative;
+  padding-bottom: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex-shrink: 0;
+`;
 
-const File = styled.img `
-max-width:100%
+const File = styled.div `
+max-width:100%;
+width: 100%;
+  height: 600px;
+  position: absolute;
+  top: 0;
+  background-image: url(${props => props.src});
+  background-size: cover;
+  background-position: center;
+  opacity: ${props => (props.showing ? 1 : 0)};
+  transition: opacity 0.5s linear;
 `;
 const Button = styled.span`
 cursor:pointer;
@@ -46,7 +63,9 @@ ${Button}{
     &:first-child{
         margin-right:10px;
     }
-}`;
+}
+margin-bottom:10px;
+`;
 const Timestamp = styled.span`
 font-weight:400;
 text-transform:uppercase;
@@ -55,7 +74,17 @@ display:block;
 font-siez:12px;
 margin:10px 0px;
 padding-bottom:10px;
-board-bottom: ${props=>props.theme.lightGreyColor} 1px solid
+border-bottom: ${props=>props.theme.lightGreyColor} 1px solid;
+`;
+
+const Textarea = styled(TextareaAutosize)`
+border:none;
+width:100%;
+resize:none;
+font-size:13px;
+&:focus{
+    outline:none
+}
 `;
 
 export default({
@@ -64,24 +93,25 @@ export default({
         avatar
     },
     location,
-    files,isLiked,likeCount,createdAt
+    files,isLiked,likeCount,createdAt,newComment,currentItem
 }) => (
+    
     <Post>
         <Header>
             <Avatar size="sm" url={avatar}/>
             <UseColumn>
-                <FatText text={username + " "}/>
+                <FatText text={username}/>
                 <Location>{location}</Location>
             </UseColumn>
         </Header>
         <Files>
             {
-                files && files.map(file =><File id = {
-                    file.id
-                }
-                src = {
-                    file.url
-                } />)
+                files && files.map((file,index) =>(<File 
+                key = {file.id}
+                id = {file.id}
+                 src = {file.url}
+                 showing={index===currentItem}
+                />))
             }
         </Files>
         <Meta>
@@ -93,6 +123,7 @@ export default({
             </Buttons>
             <FatText text={likeCount === 1?"1 like":`${likeCount} like`}/>
             <Timestamp>{createdAt}</Timestamp>
+            <Textarea placeholder={"Add a Comment..."} {...newComment}/>
             </Meta> 
     </Post>
 );
