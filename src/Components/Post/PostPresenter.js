@@ -9,6 +9,7 @@ const Post = styled.div `
 ${props => props.theme.whiteBox};
 width:100%;
 max-width:500px;
+user-select:none;
 margin-bottom:25px;
 `;
 
@@ -40,7 +41,7 @@ position: relative;
 const File = styled.div `
 max-width:100%;
 width: 100%;
-  height: 600px;
+  height: 500px;
   position: absolute;
   top: 0;
   background-image: url(${props => props.src});
@@ -51,6 +52,7 @@ width: 100%;
 `;
 const Button = styled.span`
 cursor:pointer;
+
 `;
 
 const Meta = styled.div`
@@ -66,12 +68,13 @@ ${Button}{
 }
 margin-bottom:10px;
 `;
+
 const Timestamp = styled.span`
 font-weight:400;
 text-transform:uppercase;
 opacity:0.5;
 display:block;
-font-siez:12px;
+font-size:12px;
 margin:10px 0px;
 padding-bottom:10px;
 border-bottom: ${props=>props.theme.lightGreyColor} 1px solid;
@@ -93,7 +96,7 @@ export default({
         avatar
     },
     location,
-    files,isLiked,likeCount,createdAt,newComment,currentItem
+    files,isLiked,likeCount,createdAt,newComment,currentItem,toggleLike
 }) => (
     
     <Post>
@@ -106,17 +109,17 @@ export default({
         </Header>
         <Files>
             {
-                files && files.map((file,index) =>(<File 
+                files && files.map((file,index) =><File 
                 key = {file.id}
                 id = {file.id}
                  src = {file.url}
                  showing={index===currentItem}
-                />))
+                />)
             }
         </Files>
         <Meta>
         <Buttons>
-        <Button>
+        <Button onClick={toggleLike}>
             {isLiked?<HeartFull/>:<HeartEmpty/>}
             </Button>
             <Button><Comment /></Button>
