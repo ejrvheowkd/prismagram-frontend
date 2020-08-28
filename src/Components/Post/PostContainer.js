@@ -23,7 +23,6 @@ const PostContainer = ({
     const [selfComments,setSelfComments] =useState([]);
     const comment = useInput("");
     const [createdAtS,setCreatedAt] = useState(createdAt);
-    //console.log(createdAtS);
     const [toggleLikeMutation] = useMutation(TOGGLE_LIKE, {
         variables: {
             postId: id

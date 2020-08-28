@@ -29,12 +29,14 @@ const SearchPresenter = ({ searchTerm, loading ,data}) => {
   {
     return (<Wrapper>
       <Section>
-      {data.searchUser.length===0?(<FatText text="No Users Found"/>):(data.searchUser.map(user=>(<UserCard
+      {data.searchUser.length===0?(<FatText text="No Users Found"/>):(data.searchUser.map(user=>(
+      <UserCard
       key ={user.id}
       username={user.username}
       isFollowing={user.isFollowing}
       url={user.avatar}
       itSelf={user.itSelf}
+      id = {user.id}
       />)))}
       </Section>
       <Section>
