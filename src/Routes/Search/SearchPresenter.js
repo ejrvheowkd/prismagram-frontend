@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import FatText from "../../Components/FatText";
 import Loader from "../../Components/Loader";
 import UserCard from "../../Components/UserCard";
-
+import SquarePost from "../../Components/SquarePost";
 const Wrapper = styled.div`
   height: 50vh;
 `;
@@ -12,7 +12,7 @@ const Section = styled.div`
 margin-bottom:50px;
 display:grid;
 grid-gap:25px;
-grid-template-columns:repeat(4,1fr);
+grid-template-columns:repeat(4,160px);
 grid-template-rows:160px;
 grid-auto-rows:160px;
 `;
@@ -40,7 +40,12 @@ const SearchPresenter = ({ searchTerm, loading ,data}) => {
       />)))}
       </Section>
       <Section>
-        {data.searchPost.length===0?(<FatText text="No Posts Found"/>):data.searchPost.map(post=>null)}
+        {data.searchPost.length===0?<FatText text="No Posts Found"/>:(
+          data.searchPost.map(
+          post=>(
+          <SquarePost likeCount={post.likeCount}
+           commentCount={post.commentCount}
+           file={post.files[0]} />)))}
       </Section>
     </Wrapper>
     );
@@ -48,7 +53,8 @@ const SearchPresenter = ({ searchTerm, loading ,data}) => {
 };
 SearchPresenter.propTypes = {
   searchTerm: PropTypes.string,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  data:PropTypes
 };
 
 export default SearchPresenter;
