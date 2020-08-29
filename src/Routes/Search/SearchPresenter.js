@@ -43,7 +43,9 @@ const SearchPresenter = ({ searchTerm, loading ,data}) => {
         {data.searchPost.length===0?<FatText text="No Posts Found"/>:(
           data.searchPost.map(
           post=>(
-          <SquarePost likeCount={post.likeCount}
+          <SquarePost 
+          key={post.id}
+          likeCount={post.likeCount}
            commentCount={post.commentCount}
            file={post.files[0]} />)))}
       </Section>
@@ -53,8 +55,7 @@ const SearchPresenter = ({ searchTerm, loading ,data}) => {
 };
 SearchPresenter.propTypes = {
   searchTerm: PropTypes.string,
-  loading: PropTypes.bool,
-  data:PropTypes
+  loading: PropTypes.bool
 };
 
 export default SearchPresenter;
