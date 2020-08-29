@@ -16,6 +16,12 @@ grid-template-columns:repeat(4,160px);
 grid-template-rows:160px;
 grid-auto-rows:160px;
 `;
+
+const PostSection =styled(Section)`
+grid-template-columns:repeat(4,200px);
+grid-template-rows:200px;
+grid-auto-rows:200px;
+`;
 const SearchPresenter = ({ searchTerm, loading ,data}) => {
 
   if(searchTerm === undefined)
