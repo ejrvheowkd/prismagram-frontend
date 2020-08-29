@@ -2,7 +2,7 @@ import React from "react";
 import {gql} from "apollo-boost";
 import ProfilePresenter from "./ProfilePresenter";
 import { withRouter } from "react-router-dom";
-import { useQuery } from "react-apollo-hooks";
+import { useQuery, useMutation } from "react-apollo-hooks";
 const GET_USER = gql `
     query seeUser($username: String!){
         seeUser(username:$username){
@@ -29,6 +29,12 @@ const GET_USER = gql `
     }
 `;
 
+export const LOG_OUT= gql`
+   mutation logUserOut {
+     logUserOut @client
+     }
+`;
+
 export default withRouter(({
     match: {
         params: {
@@ -39,5 +45,6 @@ export default withRouter(({
     const {data, loading} = useQuery(GET_USER, {variables: {
             username
         }});
-        return <ProfilePresenter loading={loading} data={data}/>;
+    const [logOut] = useMutation(LOG_OUT);
+        return <ProfilePresenter loading={loading} logOut={logOut} data={data}/>;
     });
