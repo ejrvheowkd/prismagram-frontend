@@ -63,7 +63,6 @@ grid-auto-rows:200px;
 `;
 export default ({data, loading,logOut}) =>
 {
-    console.log(data);
     
     if (loading===true) 
     {

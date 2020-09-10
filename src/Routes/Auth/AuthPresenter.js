@@ -58,17 +58,15 @@ export default({
 }) => (
         <Wrapper>
             <Form>
-                {
-                    action === "logIn"
-                        && (
-                            <>
-                            <Helmet><title>Log In | Prismagram</title></Helmet>
-                            <form onSubmit={onSubmit}>
-                                <Input placeholder={"Email"} {...email} type="email"/>
-<Button text ={"Log in"} />
-                            </form>
-                            </>
-                        )
+                {action === "logIn"&& (
+                    <>
+                    <Helmet><title>Log In | Prismagram</title></Helmet>
+                    <form onSubmit={onSubmit}>
+                    <Input placeholder={"Email"} {...email} type="email"/>
+                    <Button text ={"Log in"} />
+                    </form>
+                    </>
+                    )
                          }
                          {action ==="signUp"&&(
                              <>
@@ -82,7 +80,7 @@ export default({
               
               <Button text ={"Sign up"} />
                           </form>
-              </>
+            </>
 
                          )}
                          {action === "confirm" &&(
@@ -96,21 +94,23 @@ export default({
             </>
                              )}
             </Form>
-           {action!=="confrim"&&( <StateChanger>
-                {
-                    action === "logIn"
-                        ? (
-                            <> Don 't have an account?{" "}
- < Link onClick = {
-                                () => setAction("signUp")
-                            } > Sign up</Link> </>
-        ) : (
-          <>
-            Have an account?{" "}
-            <Link onClick={() => setAction("logIn")}>Log in</Link > </>
-                        )
-                }
-                </StateChanger>)}
+           {action!=="confrim"&&( 
+           <StateChanger>
+             {action === "logIn"?
+             (
+             <> Don 't have an account?{" "}
+             <Link onClick = {() => setAction("signUp")} > Sign up</Link> 
+             </>
+             ) 
+             : 
+             (
+             <> Have an account?{" "}
+            <Link onClick={() => setAction("logIn")}>Log in</Link >
+            </>
+            )
+            }
+            </StateChanger>)
+            }
         </Wrapper>
     );
 

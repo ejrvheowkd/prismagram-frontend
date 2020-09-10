@@ -5,7 +5,7 @@ import Input from "./Input";
 import {gql} from"apollo-boost";
 import useInput from "../Hooks/useInput";
 import {useQuery} from "react-apollo-hooks";
-import { HeartEmpty, Cat, Compass,Logo } from "./Icons";
+import { HeartEmpty, Cat, Compass,Logo, Upload } from "./Icons";
 import { ME } from "../SharedQueries";
 const Header = styled.header`
     width:100%;
@@ -94,6 +94,9 @@ if (loading) return "";
             <HeaderColumn>
                 <HeaderLink to="/explore">
                 <Compass/>
+                </HeaderLink>
+                <HeaderLink to ="/upload">
+                <Upload/>
                 </HeaderLink>
                 <HeaderLink to="/notifications">
                 <HeartEmpty/>

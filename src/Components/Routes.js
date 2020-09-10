@@ -6,14 +6,17 @@ import Auth from "../Routes/Auth";
 import Explore from "../Routes/Explore";
 import Profile from "../Routes/Profile";
 import Search from "../Routes/Search";
+import Upload from "../Routes/Upload";
 const LoggedInRoutes = () => (
 <Switch>
 <Route exact path="/" component={Feed}/>
 <Route  path="/explore" component={Explore}/>
 <Route  path="/search" component ={Search}/>
+<Route path="/upload" component={Upload}/>
 <Route path="/:username" component={Profile} />
 <Redirect from="*" to="/"/>
 </Switch>//Switch는 딱 하나의 라우트만 렌더링해준다
+//Profile밑에 두면 왜 안되지?
 );
 const LoggedOutRoutes = () => (
 <Switch>

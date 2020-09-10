@@ -17,7 +17,9 @@ const Input = ({
     value,
     onChange,
     type="text",
-    className
+    className,
+    url,
+    caption
 }) => <Container
 className={className}
     placeholder={placeholder}
@@ -25,6 +27,8 @@ className={className}
     value={value}
     onChange={onChange}
     type={type}
+    caption={caption}
+    url ={url}
     />;
 
 Input.propTypes = {
