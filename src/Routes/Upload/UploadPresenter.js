@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Helmet } from "react-helmet";
 import Input from "../../Components/Input";
@@ -45,25 +45,27 @@ const CaptionInput = styled(Input)`
 
 export default withRouter(({history})=>{
     const url =useInput("");
-    const arr = ['img.youtube.com/vi/','','/hqdefault.jpg'];
     const caption = useInput("");
+    const [result,setResult] =useState();
+    const [arr,setArr] = useState([{one:'https://img.youtube.com/vi/',two:'',three:'/hqdefault.jpg'}]);
+
     const {data,loading} = useQuery(ME);
-   const [uploadMutation] = useMutation(UPLOAD,{variables:{caption:caption.value,files:url.value}});
-   const onUploadSubmit = async()=>
-   {
-    arr[1] = url.value.split("=")[1];
-    //url.value = arr.join('');
-    url.value = arr[0]+arr[1]+arr[2];
-    //console.log(url.value)
-    await uploadMutation();
-    history.push(`/${data.me.username}`);
+   const [uploadMutation] = useMutation(UPLOAD,{variables:{caption:caption.value,files:result}});
+   const onUploadSubmit = ()=>
+   { 
+     uploadMutation();
+     history.push(`/${data.me.username}`);
    };
+   const onChange=(e)=>{
+    const t=e.target.value.split("=")[1];
+    setResult(arr[0].one+t+arr[0].three);
+   }
    return(  
         <Wrapper>
         <>
         <Helmet><title>Upload | Prismagram</title></Helmet>
         <FatText text="URL 링크 :"/>&nbsp;&nbsp;&nbsp;
-        <UrlInput  url={url.value} onChange={url.onChange} placeholder={"URL"}/>
+        <UrlInput  url={url.value} onChange={onChange} value ={result} placeholder={"URL"}/>
         <><CaptionInput placeholder={"영상에 대해서 말해주세요!"} caption={caption.value} onChange={caption.onChange}/></>
         <Section>
         <Button text="Upload"  onClick={onUploadSubmit}/>
@@ -71,5 +73,4 @@ export default withRouter(({history})=>{
         </>
         </Wrapper>
     );
-   
 });
