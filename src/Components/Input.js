@@ -36,7 +36,9 @@ Input.propTypes = {
     required: PropTypes.bool,
     value:PropTypes.string.isRequired,
     onChange:PropTypes.func.isRequired,
-    type:PropTypes.string
+    type:PropTypes.string,
+    url:PropTypes.string.isRequired,
+    caption:PropTypes.string
 
 }
 export default Input;

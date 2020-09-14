@@ -35,30 +35,39 @@ const UrlInput = styled(Input)`
     text-align: center;
     width: 70%;
 `;
-
+const CaptionInput = styled(Input)`
+    background-color:${props=>props.theme.lightGreyColor};
+    height: 200px;
+    width:500px;
+    margin-top:50px;
+    margin-left:300px;
+`;
 
 export default withRouter(({history})=>{
-    const urls =useInput("");
+    const url =useInput("");
+    const arr = ['img.youtube.com/vi/','','/hqdefault.jpg'];
+    const caption = useInput("");
     const {data,loading} = useQuery(ME);
-    const caption = "sss";
-   // console.log(url);
-   const [uploadMutation] = useMutation(UPLOAD,{variables:{caption,files:urls.value}});
+   const [uploadMutation] = useMutation(UPLOAD,{variables:{caption:caption.value,files:url.value}});
    const onUploadSubmit = async()=>
    {
+    arr[1] = url.value.split("=")[1];
+    //url.value = arr.join('');
+    url.value = arr[0]+arr[1]+arr[2];
+    //console.log(url.value)
     await uploadMutation();
     history.push(`/${data.me.username}`);
    };
    return(  
         <Wrapper>
-            <>
+        <>
         <Helmet><title>Upload | Prismagram</title></Helmet>
         <FatText text="URL 링크 :"/>&nbsp;&nbsp;&nbsp;
-        <form>
-        <UrlInput  url={urls.value} onChange={urls.onChange} placeholder={"URL"}/>
+        <UrlInput  url={url.value} onChange={url.onChange} placeholder={"URL"}/>
+        <><CaptionInput placeholder={"영상에 대해서 말해주세요!"} caption={caption.value} onChange={caption.onChange}/></>
         <Section>
         <Button text="Upload"  onClick={onUploadSubmit}/>
         </Section>
-        </form>
         </>
         </Wrapper>
     );
