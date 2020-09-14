@@ -63,7 +63,7 @@ grid-auto-rows:200px;
 `;
 export default ({data, loading,logOut}) =>
 {
-    
+   
     if (loading===true) 
     {
                 return (<Wrapper><Loader/></Wrapper>);
@@ -82,7 +82,7 @@ export default ({data, loading,logOut}) =>
                 followersCount,
                 postsCount,
                 posts
-            }
+            }  
         } = data;
         return (
         <Wrapper>
@@ -118,9 +118,10 @@ export default ({data, loading,logOut}) =>
                 {posts&&posts.map(post=>(
                      <SquarePost 
                      key={post.id}
+                        id={post.id}
                      likeCount={post.likeCount}
-                      commentCount={post.commentCount}
-                      file={post.files[0]}/>
+                     commentCount={post.commentCount}
+                     file={post.files[0]}/>
                 ))}
             </Posts>
          </Wrapper>

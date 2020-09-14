@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { HeartFull, CommentFull } from "./Icons";
+import Detail from "../Routes/Detali";
+
 
 const Overlay = styled.div`
   background-color: rgba(0, 0, 0, 0.6);
@@ -42,9 +44,24 @@ const NumberText = styled.span`
   font-size: 16px;
 `;
 
-const SquarePost = ({ likeCount, commentCount, file }) => (
-  <Container bg={file.url}>
-    <Overlay>
+
+
+const SquarePost = ({ id,likeCount, commentCount, file}) =>{
+  const [flag,setFlag] = useState(true);
+  const onClick =()=>{
+   if(flag)
+   setFlag(false);
+  }
+  const close =()=>{
+    if(!flag)
+    {
+      setFlag(true);
+    }
+  }
+  return (
+  <Container bg={file.url} onClick={onClick}>
+    {flag?
+    (<Overlay>
       <Number>
         <HeartFull />
         <NumberText>{likeCount}</NumberText>
@@ -53,9 +70,11 @@ const SquarePost = ({ likeCount, commentCount, file }) => (
         <CommentFull />
         <NumberText>{commentCount}</NumberText>
       </Number>
-    </Overlay>
+    </Overlay>):(<Detail id={id} onClick={close} bg={file.url}></Detail>)
+}
   </Container>
 );
+}
 
 SquarePost.propTypes = {
   likeCount: PropTypes.number.isRequired,
