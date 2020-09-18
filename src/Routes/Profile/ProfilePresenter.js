@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import {withRouter} from "react-router-dom";
 import {useQuery} from "react-apollo-hooks";
@@ -9,6 +9,7 @@ import FollowButton from "../../Components/FollowButton";
 import {Helmet} from "react-helmet";
 import SquarePost from "../../Components/SquarePost";
 import Button from "../../Components/Button";
+import Detail from "../Detail";
 
 
 const Wrapper = styled.div `
@@ -61,12 +62,11 @@ grid-template-columns:repeat(4,200px);
 grid-template-rows:200px;
 grid-auto-rows:200px;
 `;
-export default ({data, loading,logOut}) =>
+export default ({data, loading,logOut,onClick,flag,onChose,urlS,postId}) =>
 {
-   
     if (loading===true) 
     {
-                return (<Wrapper><Loader/></Wrapper>);
+        return (<Wrapper><Loader/></Wrapper>);
     }
     else if(!loading&&data&&data.seeUser){
         const {
@@ -84,6 +84,8 @@ export default ({data, loading,logOut}) =>
                 posts
             }  
         } = data;
+        if(flag)
+        {
         return (
         <Wrapper>
         <Helmet>
@@ -113,12 +115,14 @@ export default ({data, loading,logOut}) =>
                     <FullName text={fullName}/>
                     <Bio>{bio}</Bio>
                 </HeaderColumn>
-            </Header >
+            </Header>
+            
             <Posts>
                 {posts&&posts.map(post=>(
-                     <SquarePost 
+                     <SquarePost onClick={onClick}
+                     onChose ={onChose}
                      key={post.id}
-                        id={post.id}
+                     id={post.id}
                      likeCount={post.likeCount}
                      commentCount={post.commentCount}
                      file={post.files[0]}/>
@@ -126,6 +130,10 @@ export default ({data, loading,logOut}) =>
             </Posts>
          </Wrapper>
       );
+      }else
+      {
+        return <Detail onClick={onClick} url={urlS} posts={posts} avatar={avatar} username={username} postId={postId}></Detail>
+      }
     }
     return null;
 };
